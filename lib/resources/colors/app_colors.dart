@@ -19,6 +19,8 @@ class AppColors {
   static Color greySecondary = HexColor.fromHex('#444F66');
   static Color greyTertiary = HexColor.fromHex('#909FB3');
 
+  static Color boxShadow = HexColor.fromHex('#F4F6FA');
+
   static Color white = HexColor.fromHex('#FFFFFF');
   static Color black = HexColor.fromHex('#000000');
 }

@@ -34,6 +34,12 @@ dependencies:
   cupertino_icons: 1.0.2
   auto_route: 7.3.1
   flutter_native_splash: 2.3.2
+  qr_code_scanner: 1.0.1
+  easy_localization: 3.0.3
+  flutter_bloc: 8.1.2
+  get_it: 7.2.0
+  image_picker: 1.0.4
+  google_mlkit_barcode_scanning: 0.9.0
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +65,7 @@ flutter:
   assets:
     - assets/images/png/
     - assets/fonts/
+    - lib/resources/languages/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -81,6 +88,16 @@ flutter:
       - asset: assets/fonts/Mulish-Regular.ttf
         weight: 400
 
+flutter_gen:
+  output: lib/
+  line_length: 100
+  # integrations:
+  #   flutter_svg: true
+  assets:
+    exclude:
+      - assets/fonts/*
+      - lib/resources/languages/translations/*
+
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
@@ -89,6 +106,3 @@ flutter_launcher_icons:
   adaptive_icon_background: "#18B3AB"
   remove_alpha_ios: true
   min_sdk_android: 21
-
-flutter_native_splash:
-  color: "#18B3AB"

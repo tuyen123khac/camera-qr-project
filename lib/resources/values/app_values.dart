@@ -96,16 +96,18 @@ class AppSize {
   static const double s12 = 12.0;
   static const double s14 = 14.0;
   static const double s16 = 16.0;
+  static const double s40 = 40.0;
   static const double s44 = 44.0;
+  static const double s50 = 50.0;
 }
 
-class ToolBarHeightApp {
+class AppToolBarHeight {
   static const double h56 = 56.0;
   static const double h60 = 60.0;
   static const double h80 = 80.0;
 }
 
-class OffsetApp {
+class AppOffset {
   static const o0_1 = Offset(0.0, -1.0);
   static const o11 = Offset(1.0, 1.0);
   static const o02 = Offset(0.0, 2.0);
@@ -118,7 +120,7 @@ class OffsetApp {
   static const o80 = Offset(8.0, 0.0);
 }
 
-class BlurRadiusApp {
+class AppBlurRadius {
   static const double b4 = 4.0;
   static const double b5 = 5.0;
   static const double b7 = 7.0;
@@ -126,12 +128,12 @@ class BlurRadiusApp {
   static const double b12 = 12.0;
 }
 
-class SpreadRadiusApp {
+class AppSpreadRadius {
   static const double s0 = 0.0;
   static const s10 = 10.0;
 }
 
-class OpacityApp {
+class AppOpacity {
   static const double opa00 = 0.0;
   static const double opa10 = 0.1;
   static const double opa20 = 0.2;

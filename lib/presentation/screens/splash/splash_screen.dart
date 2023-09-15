@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         color: AppColors.tealPrimary,
         child: Center(
           child: Image.asset(
-            AppImages.appLogo,
+            AppImages.appLogoTransparent,
             color: AppColors.white,
             height: 80,
             width: 80,

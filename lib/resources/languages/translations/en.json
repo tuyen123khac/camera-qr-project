@@ -1,0 +1,25 @@
+{
+    "Errors": {
+      "UnknownError": "Under maintainance",
+      "NetworkError": "Please check your internet connection",
+      "SomethingWentWrong": "Oops...\nSomething went wrong!"
+    },
+    "Onboarding": {
+      "Onboarding1": {
+        "Title": "Let's start improving your well-being",
+        "Description": "Start improving your well-being today. By using this app, you can elevate your well-being. We care about your health and happiness"
+      },
+      "Onboarding2": {
+        "Title": "You can use a variety of services",
+        "Description": "Access a variety of well-being services. With this app, you can choose the services that are right for you and elevate your well-being"
+      },
+      "Onboarding3": {
+        "Title": "Your data can be used as crypto assets",
+        "Description": "Your well-being data can be utilized as crypto assets. We prioritize your privacy and security"
+      }
+    },
+    "AAndB": "{} and {}",
+    "Comma": ", ",
+    "ScanQRCode": "Scan QR code"
+  }
+  

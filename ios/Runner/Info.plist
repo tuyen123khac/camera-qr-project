@@ -49,5 +49,14 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>CFBundleLocalizations</key>
+		<array>
+			<string>en</string>
+			<string>vi</string>
+		</array>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>$(PRODUCT_NAME) would like to take a photo and read Barcode</string>
+		<key>NSCameraUsageDescription</key>
+		<string>$(PRODUCT_NAME) requires camera permission for video record and taking photos</string>
 	</dict>
 </plist>
