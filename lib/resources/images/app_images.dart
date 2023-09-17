@@ -8,6 +8,9 @@ class AppImages {
   static String icFlashOn = ImagePath.getPath('ic_flash_on.png');
   static String icFlashOff = ImagePath.getPath('ic_flash_off.png');
   static String icImportImage = ImagePath.getPath('ic_import_image.png');
+  static String icWeb = ImagePath.getPath('ic_web.png');
+  static String icSuccess = ImagePath.getPath('ic_success.png');
+  static String icFailed = ImagePath.getPath('ic_failed.png');
 }
 
 class ImagePath {
