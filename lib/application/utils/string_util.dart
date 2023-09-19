@@ -1,5 +1,5 @@
-import 'package:camera_qr_project/domain/barcode/barcode_wifi_entity.dart';
-import 'package:camera_qr_project/resources/languages/translation_keys.g.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_wifi_entity.dart';
+import 'package:camera_qr_project/presentation/languages/translation_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class StringUtils {

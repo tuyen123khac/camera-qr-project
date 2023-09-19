@@ -46,6 +46,7 @@ class ImageButton extends StatelessWidget {
         ),
         child: Image.asset(
           imagePath,
+          color: imageColor,
           height: size,
           width: size,
         ),

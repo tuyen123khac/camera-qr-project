@@ -1,11 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:camera_qr_project/application/utils/string_extension.dart';
+import 'package:camera_qr_project/domain/bloc/global/global_bloc.dart';
+import 'package:camera_qr_project/domain/bloc/global/global_state.dart';
+import 'package:camera_qr_project/presentation/languages/app_languages.dart';
 import 'package:camera_qr_project/presentation/navigation/app_navigation.dart';
-import 'package:camera_qr_project/presentation/widgets/buttons/app_filled_button.dart';
 import 'package:camera_qr_project/presentation/widgets/buttons/image_button.dart';
 import 'package:camera_qr_project/resources/colors/app_colors.dart';
 import 'package:camera_qr_project/resources/images/app_images.dart';
+import 'package:camera_qr_project/presentation/languages/translation_keys.g.dart';
+import 'package:camera_qr_project/resources/styles/app_text_style.dart';
 import 'package:camera_qr_project/resources/values/app_values.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class DashboardScreen extends StatefulWidget {
@@ -20,8 +27,41 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(
+          context.tr(LocaleKeys.Dashboard),
+          style: AppTextStyles.bold(color: AppColors.white),
+        ),
         centerTitle: true,
+        actions: [
+          BlocBuilder<GlobalBloc, GlobalState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  showBottomSheet(
+                    context: context,
+                    builder: (ctx) {
+                      return ListView.builder(
+                        itemCount: AppLanguages.supportedLanguages.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () => context
+                                .read<GlobalBloc>()
+                                .changeLocale(AppLanguages.supportedLanguages[index].locale),
+                            child: ListTile(
+                              title: Text(AppLanguages.supportedLanguages[index].name),
+                              trailing: Text(AppLanguages.supportedLanguages[index].flag),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+                icon: Text(AppLanguages.parseLanguage(state.locale.languageCode).flag),
+              );
+            },
+          )
+        ],
       ),
       body: Container(
         color: AppColors.bgDisable,
@@ -65,6 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 imagePath: AppImages.icTakePhoto,
                 size: AppSize.s50,
                 hasShadow: true,
+                onPressed: () => context.router.push(const TakePhotoRoute()),
               ),
             ],
           ),

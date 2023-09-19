@@ -23,6 +23,7 @@ abstract class  LocaleKeys {
   static const Changelanguage = 'Changelanguage';
   static const SelectYourLanguage = 'SelectYourLanguage';
   static const NoCameraPermissionAllowed = 'NoCameraPermissionAllowed';
+  static const PleaseEnableCamera = 'PleaseEnableCamera';
   static const OpenSettings = 'OpenSettings';
 
 }

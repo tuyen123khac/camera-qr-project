@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:camera_qr_project/presentation/navigation/app_navigation.dart';
 import 'package:camera_qr_project/resources/colors/app_colors.dart';
 import 'package:camera_qr_project/resources/images/app_images.dart';
+import 'package:camera_qr_project/resources/values/app_values.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -33,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Image.asset(
             AppImages.appLogoTransparent,
             color: AppColors.white,
-            height: 80,
-            width: 80,
+            height: AppSize.s80,
+            width: AppSize.s80,
           ),
         ),
       ),

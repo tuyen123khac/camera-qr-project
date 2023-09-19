@@ -1,4 +1,4 @@
-import 'package:camera_qr_project/domain/barcode/barcode_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_entity.dart';
 
 class BarcodeUrlEntity extends BarcodeEntity {
   final String? title;

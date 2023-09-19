@@ -1,15 +1,64 @@
+import 'dart:io';
+
+import 'package:camera_qr_project/application/enums/screen_state_enum.dart';
+import 'package:camera_qr_project/application/utils/permission_util.dart';
 import 'package:camera_qr_project/application/utils/string_util.dart';
-import 'package:camera_qr_project/domain/barcode/barcode_url_entity.dart';
-import 'package:camera_qr_project/domain/barcode/barcode_wifi_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_url_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_wifi_entity.dart';
 import 'package:camera_qr_project/presentation/screens/scanning/bloc/scanning_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart' as qr;
 
 class ScanningBloc extends Cubit<ScanningState> {
   ScanningBloc() : super(ScanningState());
+  var isCameraPermissionChecked = false;
   final ImagePicker _picker = ImagePicker();
+
+  void handlePermission() async {
+    final cameraPermission = await PermissionUtil.checkCameraPermission();
+
+    switch (cameraPermission) {
+      case PermissionStatus.granted:
+        _onCameraPermissionGranted();
+        break;
+      case PermissionStatus.denied:
+        _onCameraPermissionDenied();
+        break;
+      case PermissionStatus.permanentlyDenied:
+        _onCameraPermissionPermanentlyDenied();
+        break;
+      default:
+    }
+  }
+
+  void _onCameraPermissionGranted() {
+    emit(state.copyWith(cameraPermissionState: CameraPermissionState.granted));
+  }
+
+  void _onCameraPermissionDenied() {
+    if (!isCameraPermissionChecked) {
+      PermissionUtil.requestCameraPermission();
+      isCameraPermissionChecked = true;
+      return;
+    }
+    emit(state.copyWith(cameraPermissionState: CameraPermissionState.requireCameraPermission));
+  }
+
+  void _onCameraPermissionPermanentlyDenied() {
+    if (Platform.isIOS) {
+      emit(state.copyWith(cameraPermissionState: CameraPermissionState.requireCameraPermission));
+    }
+
+    if (!isCameraPermissionChecked) {
+      PermissionUtil.requestCameraPermission();
+      isCameraPermissionChecked = true;
+      return;
+    }
+    emit(state.copyWith(cameraPermissionState: CameraPermissionState.requireCameraPermission));
+  }
 
   void initFlashState(bool value) {
     emit(state.copyWith(isFlashOn: value));

@@ -1,4 +1,4 @@
-import 'package:camera_qr_project/domain/barcode/barcode_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_entity.dart';
 
 class BarcodeWifiEntity extends BarcodeEntity {
   final String? ssid;

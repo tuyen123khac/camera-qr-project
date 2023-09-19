@@ -28,7 +28,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 ```bash
 flutter pub run easy_localization:generate \
   -f keys \
-  -S lib/resources/languages/translations \
-  -O lib/resources/languages \
+  -S lib/presentation/languages/translations \
+  -O lib/presentation/languages \
   -o translation_keys.g.dart
 ```

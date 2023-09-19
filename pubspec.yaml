@@ -40,6 +40,11 @@ dependencies:
   get_it: 7.2.0
   image_picker: 1.0.4
   google_mlkit_barcode_scanning: 0.9.0
+  camera: 0.10.5+4
+  lottie: 2.6.0
+  shared_preferences: 2.2.1
+  permission_handler: 11.0.0
+  app_settings: 5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +70,8 @@ flutter:
   assets:
     - assets/images/png/
     - assets/fonts/
-    - lib/resources/languages/translations/
+    - assets/lotties/
+    - lib/presentation/languages/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -96,7 +102,7 @@ flutter_gen:
   assets:
     exclude:
       - assets/fonts/*
-      - lib/resources/languages/translations/*
+      - lib/presentation/languages/translations/*
 
 flutter_launcher_icons:
   android: "launcher_icon"

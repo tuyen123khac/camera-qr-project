@@ -33,6 +33,23 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ScanningScreen(),
       );
     },
+    TakePhotoRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TakePhotoScreen(),
+      );
+    },
+    ViewPhotoRoute.name: (routeData) {
+      final args = routeData.argsAs<ViewPhotoRouteArgs>(
+          orElse: () => const ViewPhotoRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ViewPhotoScreen(
+          key: args.key,
+          imageFile: args.imageFile,
+        ),
+      );
+    },
   };
 }
 
@@ -76,4 +93,56 @@ class ScanningRoute extends PageRouteInfo<void> {
   static const String name = 'ScanningRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TakePhotoScreen]
+class TakePhotoRoute extends PageRouteInfo<void> {
+  const TakePhotoRoute({List<PageRouteInfo>? children})
+      : super(
+          TakePhotoRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TakePhotoRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ViewPhotoScreen]
+class ViewPhotoRoute extends PageRouteInfo<ViewPhotoRouteArgs> {
+  ViewPhotoRoute({
+    Key? key,
+    XFile? imageFile,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ViewPhotoRoute.name,
+          args: ViewPhotoRouteArgs(
+            key: key,
+            imageFile: imageFile,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ViewPhotoRoute';
+
+  static const PageInfo<ViewPhotoRouteArgs> page =
+      PageInfo<ViewPhotoRouteArgs>(name);
+}
+
+class ViewPhotoRouteArgs {
+  const ViewPhotoRouteArgs({
+    this.key,
+    this.imageFile,
+  });
+
+  final Key? key;
+
+  final XFile? imageFile;
+
+  @override
+  String toString() {
+    return 'ViewPhotoRouteArgs{key: $key, imageFile: $imageFile}';
+  }
 }

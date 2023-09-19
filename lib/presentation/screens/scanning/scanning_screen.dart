@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:camera_qr_project/data/di.dart';
-import 'package:camera_qr_project/domain/barcode/barcode_entity.dart';
-import 'package:camera_qr_project/domain/barcode/barcode_url_entity.dart';
-import 'package:camera_qr_project/domain/barcode/barcode_wifi_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_url_entity.dart';
+import 'package:camera_qr_project/domain/entities/barcode/barcode_wifi_entity.dart';
 import 'package:camera_qr_project/presentation/screens/scanning/bloc/scanning_bloc.dart';
 import 'package:camera_qr_project/presentation/screens/scanning/bloc/scanning_selector.dart';
 import 'package:camera_qr_project/presentation/screens/scanning/bloc/scanning_state.dart';
+import 'package:camera_qr_project/presentation/widgets/buttons/app_outline_button.dart';
 import 'package:camera_qr_project/presentation/widgets/buttons/image_button.dart';
 import 'package:camera_qr_project/presentation/widgets/dialogs/app_base_dialog.dart';
 import 'package:camera_qr_project/resources/colors/app_colors.dart';
 import 'package:camera_qr_project/resources/images/app_images.dart';
-import 'package:camera_qr_project/resources/languages/translation_keys.g.dart';
+import 'package:camera_qr_project/presentation/languages/translation_keys.g.dart';
 import 'package:camera_qr_project/resources/styles/app_text_style.dart';
 import 'package:camera_qr_project/resources/values/app_values.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,18 +31,25 @@ class ScanningScreen extends StatefulWidget {
   State<ScanningScreen> createState() => _ScanningScreenState();
 }
 
-class _ScanningScreenState extends State<ScanningScreen> {
+class _ScanningScreenState extends State<ScanningScreen> with WidgetsBindingObserver {
   final ScanningBloc _bloc = provider.get<ScanningBloc>();
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  qr.Barcode? scanQrResult;
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   qr.QRViewController? _cameraController;
   StreamSubscription<qr.Barcode>? _scanQrSubscription;
+
+  @override
+  void initState() {
+    _bloc.handlePermission();
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
 
   @override
   void dispose() {
     _cameraController?.dispose();
     _scanQrSubscription?.cancel();
     _bloc.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -48,11 +57,33 @@ class _ScanningScreenState extends State<ScanningScreen> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      _cameraController!.pauseCamera();
+      _cameraController?.pauseCamera();
       return;
     }
 
-    _cameraController!.resumeCamera();
+    _cameraController?.resumeCamera();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _handleResumeState();
+        break;
+      case AppLifecycleState.paused:
+        _handlePausedState();
+      default:
+    }
+  }
+
+  void _handleResumeState() {
+    _cameraController?.resumeCamera();
+    _bloc.handlePermission();
+  }
+
+  void _handlePausedState() {
+    _cameraController?.pauseCamera();
   }
 
   void _onQRViewCreated(qr.QRViewController controller) {
@@ -61,7 +92,7 @@ class _ScanningScreenState extends State<ScanningScreen> {
       _onDataScanned,
       onError: _onGetError,
     );
-    _initCameraState();
+    _initFlashState();
   }
 
   void _onDataScanned(qr.Barcode scanData) {
@@ -73,7 +104,7 @@ class _ScanningScreenState extends State<ScanningScreen> {
     _bloc.onScanError();
   }
 
-  Future<void> _initCameraState() async {
+  Future<void> _initFlashState() async {
     final isFlashOn = await _cameraController?.getFlashStatus() ?? false;
     _bloc.initFlashState(isFlashOn);
   }
@@ -105,8 +136,8 @@ class _ScanningScreenState extends State<ScanningScreen> {
   Widget _buildBody() {
     return MultiBlocListener(
       listeners: [
-        ScanningScreenStateSuccessListener(listener: _onSuccess),
-        ScanningScreenStateFailedListener(listener: _onFailed),
+        ScanningScreenStateSuccessListener(listener: _onScanSuccess),
+        ScanningScreenStateFailedListener(listener: _onScanFailed),
       ],
       child: SafeArea(
         child: Column(
@@ -119,7 +150,7 @@ class _ScanningScreenState extends State<ScanningScreen> {
     );
   }
 
-  void _onSuccess(BuildContext context, ScanningState state) {
+  void _onScanSuccess(BuildContext context, ScanningState state) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -162,7 +193,7 @@ class _ScanningScreenState extends State<ScanningScreen> {
     }
   }
 
-  void _onFailed(BuildContext context, ScanningState state) {
+  void _onScanFailed(BuildContext context, ScanningState state) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -185,14 +216,64 @@ class _ScanningScreenState extends State<ScanningScreen> {
   Widget _buildCameraView() {
     return Expanded(
       flex: 5,
-      child: qr.QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-        cameraFacing: qr.CameraFacing.back,
-        overlay: qr.QrScannerOverlayShape(
-          borderColor: AppColors.tealPrimary,
-          borderWidth: AppSize.s10,
-          borderRadius: AppBorderRadius.r10,
+      child: ScanningScreenPermissionGrantedSelector(
+        builder: (isGranted) {
+          if (isGranted) return _buildQrView();
+
+          return _buildPermissionView();
+        },
+      ),
+    );
+  }
+
+  Widget _buildQrView() {
+    return qr.QRView(
+      key: _qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      cameraFacing: qr.CameraFacing.back,
+      overlay: qr.QrScannerOverlayShape(
+        borderColor: AppColors.tealPrimary,
+        borderWidth: AppSize.s10,
+        borderRadius: AppBorderRadius.r10,
+      ),
+    );
+  }
+
+  Widget _buildPermissionView() {
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p16),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              AppImages.icPermission,
+              height: AppSize.s60,
+              width: AppSize.s60,
+            ),
+            const SizedBox(height: AppMargin.m16),
+            Text(
+              context.tr(LocaleKeys.NoCameraPermissionAllowed),
+              style: AppTextStyles.bold(
+                color: AppColors.greyTertiary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppMargin.m8),
+            Text(
+              context.tr(LocaleKeys.PleaseEnableCamera),
+              style: AppTextStyles.regular(
+                color: AppColors.greyTertiary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppMargin.m16),
+            AppOutlinedButton(
+              label: context.tr(LocaleKeys.OpenSettings),
+              onPressed: () => AppSettings.openAppSettings(),
+            )
+          ],
         ),
       ),
     );
@@ -216,18 +297,13 @@ class _ScanningScreenState extends State<ScanningScreen> {
   }
 
   Widget _buildFlashButton() {
-    return BlocSelector<ScanningBloc, ScanningState, bool>(
-      selector: (state) {
-        return state.isFlashOn;
-      },
-      builder: (context, isFlashOn) {
-        return ImageButton(
-          imagePath: isFlashOn ? AppImages.icFlashOn : AppImages.icFlashOff,
-          backgroundColor: AppColors.bgDisable,
-          size: AppSize.s40,
-          onPressed: _onToggleFlash,
-        );
-      },
+    return ScanningScreenIsFlashOnSelector(
+      builder: (isFlashOn) => ImageButton(
+        imagePath: isFlashOn ? AppImages.icFlashOn : AppImages.icFlashOff,
+        backgroundColor: AppColors.bgDisable,
+        size: AppSize.s40,
+        onPressed: _onToggleFlash,
+      ),
     );
   }
 
