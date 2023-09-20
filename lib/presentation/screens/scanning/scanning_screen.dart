@@ -162,11 +162,11 @@ class _ScanningScreenState extends State<ScanningScreen> with WidgetsBindingObse
           positiveButtonText: context.tr(LocaleKeys.OK),
           negativeButtonText: context.tr(LocaleKeys.Cancel),
           onPressPositiveButton: () {
-            context.router.popUntilRoot();
-          },
-          onPressNegativeButton: () {
             context.router.pop();
             _cameraController?.resumeCamera();
+          },
+          onPressNegativeButton: () {
+            context.router.popUntilRoot();
           },
         );
       },
@@ -174,7 +174,7 @@ class _ScanningScreenState extends State<ScanningScreen> with WidgetsBindingObse
   }
 
   String _getDialogContent(BarcodeEntity entity) {
-    final question = context.tr(LocaleKeys.DoYouWantToSaveThis);
+    final question = context.tr(LocaleKeys.DoYouWantToContinue);
     switch (entity.runtimeType) {
       case BarcodeWifiEntity:
         final wifiEntity = (entity as BarcodeWifiEntity);
@@ -269,9 +269,12 @@ class _ScanningScreenState extends State<ScanningScreen> with WidgetsBindingObse
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppMargin.m16),
-            AppOutlinedButton(
-              label: context.tr(LocaleKeys.OpenSettings),
-              onPressed: () => AppSettings.openAppSettings(),
+            SizedBox(
+              width: double.infinity,
+              child: AppOutlinedButton(
+                label: context.tr(LocaleKeys.OpenSettings),
+                onPressed: () => AppSettings.openAppSettings(),
+              ),
             )
           ],
         ),

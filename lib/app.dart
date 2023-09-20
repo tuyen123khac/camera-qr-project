@@ -11,7 +11,6 @@ class App extends StatelessWidget {
   final _appRouter = AppRouter();
   App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -25,7 +24,7 @@ class App extends StatelessWidget {
         buildWhen: (previous, current) => previous.locale != current.locale,
         builder: (context, state) {
           return MaterialApp.router(
-            title: 'Camera demo app',
+            title: 'Camera app',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

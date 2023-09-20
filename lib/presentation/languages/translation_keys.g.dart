@@ -10,7 +10,7 @@ abstract class  LocaleKeys {
   static const Success = 'Success';
   static const Failed = 'Failed';
   static const CantGetBarcode = 'CantGetBarcode';
-  static const DoYouWantToSaveThis = 'DoYouWantToSaveThis';
+  static const DoYouWantToContinue = 'DoYouWantToContinue';
   static const OK = 'OK';
   static const Cancel = 'Cancel';
   static const YourCodeIs = 'YourCodeIs';
@@ -25,5 +25,8 @@ abstract class  LocaleKeys {
   static const NoCameraPermissionAllowed = 'NoCameraPermissionAllowed';
   static const PleaseEnableCamera = 'PleaseEnableCamera';
   static const OpenSettings = 'OpenSettings';
+  static const NoCameraOrMicrophonePermissionAllowed = 'NoCameraOrMicrophonePermissionAllowed';
+  static const PleaseEnableCameraMicrophone = 'PleaseEnableCameraMicrophone';
+  static const IfYouHasEnabledThen = 'IfYouHasEnabledThen';
 
 }

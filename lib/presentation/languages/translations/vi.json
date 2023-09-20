@@ -8,7 +8,7 @@
   "Success": "Thành công",
   "Failed": "Thất bại",
   "CantGetBarcode": "Không thể đọc được Barcode",
-  "DoYouWantToSaveThis": "Bạn có muốn lưu kết quả này?",
+  "DoYouWantToContinue": "Bạn có muốn tiếp tục?",
   "OK": "Đồng ý",
   "Cancel": "Hủy bỏ",
   "YourCodeIs": "Code của bạn là",
@@ -22,5 +22,8 @@
   "SelectYourLanguage": "Chọn ngôn ngữ",
   "NoCameraPermissionAllowed": "Không có quyền truy cập camera",
   "PleaseEnableCamera": "Vui lòng bật quyền truy cập camera trong cài đặt",
-  "OpenSettings": "Mở cài đặt"
+  "OpenSettings": "Mở cài đặt",
+  "NoCameraOrMicrophonePermissionAllowed": "Không có quyền truy cập camera hoặc microphone",
+  "PleaseEnableCameraMicrophone": "Vui lòng bật quyền truy cập camera/microphone trong cài đặt",
+  "IfYouHasEnabledThen": "Nếu bạn đã bật, hãy:"
 }

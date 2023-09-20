@@ -8,7 +8,7 @@
   "Success": "Success",
   "Failed": "Failed",
   "CantGetBarcode": "Can't get Barcode",
-  "DoYouWantToSaveThis": "Do you want to save this result?",
+  "DoYouWantToContinue": "Do you want to continue?",
   "OK": "OK",
   "Cancel": "Cancel",
   "YourCodeIs": "Your code is",
@@ -22,5 +22,8 @@
   "SelectYourLanguage": "Slect your language",
   "NoCameraPermissionAllowed": "No camera permission allowed",
   "PleaseEnableCamera": "Please enable camera permission in app settings",
-  "OpenSettings": "Open settings"
+  "OpenSettings": "Open settings",
+  "NoCameraOrMicrophonePermissionAllowed": "No camera or microphone permission allowed",
+  "PleaseEnableCameraMicrophone": "Please enable camera/microphone permission in app settings",
+  "IfYouHasEnabledThen": "If you has enabled, then:"
 }

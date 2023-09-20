@@ -11,11 +11,16 @@ class AppImages {
   static String icWeb = ImagePath.getPath('ic_web.png');
   static String icSuccess = ImagePath.getPath('ic_success.png');
   static String icFailed = ImagePath.getPath('ic_failed.png');
-  static String lottieLoading = ImagePath.getPath('lottie_loading.json');
   static String lottieCameraLoading = ImagePath.getPath('lottie_camera_loading.json');
   static String icLens = ImagePath.getPath('ic_lens.png');
   static String icFlashAuto = ImagePath.getPath('ic_flash_auto.png');
   static String icPermission = ImagePath.getPath('ic_permission.png');
+  static String scanQr = ImagePath.getPath('scan_qr.png');
+  static String selfie = ImagePath.getPath('selfie.png');
+
+  static String lottieLoading = ImagePath.getPath('lottie_loading.json');
+  static String lottieScanQr = ImagePath.getPath('lottie_scan_qr.json');
+  static String lottieTakePhoto = ImagePath.getPath('lottie_take_photo.json');
 }
 
 class ImagePath {

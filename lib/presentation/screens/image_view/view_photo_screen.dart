@@ -56,10 +56,8 @@ class _ViewPhotoScreenState extends State<ViewPhotoScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
           child: AppFilledButton(
-            label: context.tr(LocaleKeys.Save),
-            onPressed: () {
-              // TODO save image path.
-            },
+            label: context.tr(LocaleKeys.OK),
+            onPressed: () => context.router.pop(),
           ),
         )
       ],

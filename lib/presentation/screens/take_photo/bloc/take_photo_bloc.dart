@@ -14,6 +14,10 @@ class TakePhotoBloc extends Cubit<TakePhotoState> {
     emit(state.copyWith(screenState: CameraScreenState.initFailed));
   }
 
+  void onInitCameraRequirePermission() {
+    emit(state.copyWith(screenState: CameraScreenState.requirePermissions));
+  }
+
   void onInitCameraSuccess() {
     emit(state.copyWith(screenState: CameraScreenState.initSuccess));
   }
