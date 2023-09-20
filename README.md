@@ -1,19 +1,13 @@
 # camera_qr_project
 
-A new Flutter project.
+This project mainly works on exploring camera package.
+Main features:
+- Scan QR code
+- Import QR image
+- Take photo
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Alt text](/lib/dashboard.png?raw=true "Dashboard")
+![Alt text](/lib/scan_qr.png?raw=true "Scan QR screen")
 
 ## Helpful command:
 
